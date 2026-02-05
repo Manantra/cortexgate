@@ -1,0 +1,17 @@
+[Unit]
+Description=CortexGate Dashboard Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/cortexgate/dashboard
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=PORT=8080
+Environment=INBOX_DIR=%h/dashboard-inbox
+Environment=SECOND_BRAIN_DIR=%h/second-brain
+
+[Install]
+WantedBy=default.target

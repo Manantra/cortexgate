@@ -1,10 +1,12 @@
-# Content Gate
+# CortexGate
 
 <p align="center">
   <img src="docs/flow-diagram.jpg" alt="Content Gate Flow: Telegram → AI Summary → Dashboard → Second Brain" width="100%">
 </p>
 
 A lightweight dashboard to review and curate AI-generated content summaries before saving them to your Second Brain (Obsidian).
+
+> **Note:** This project was formerly known as "Content Gate".
 
 ## Features
 
@@ -69,10 +71,10 @@ Dashboard available at: http://localhost:3000
 
 ```bash
 # Copy service file
-cp setup/content-gate.service ~/.config/systemd/user/
+cp setup/cortexgate.service ~/.config/systemd/user/
 
 # Edit paths in the service file
-nano ~/.config/systemd/user/content-gate.service
+nano ~/.config/systemd/user/cortexgate.service
 
 # Enable and start
 systemctl --user daemon-reload
@@ -124,16 +126,16 @@ Items in `~/dashboard-inbox/` follow this structure:
 
 ## AI Bot Integration (OpenClaw Skill)
 
-Content-Gate includes an OpenClaw skill for automatic URL summarization.
+CortexGate includes an OpenClaw skill for automatic URL summarization.
 
 ### Install the Skill
 
 ```bash
 # Option 1: Symlink (recommended - stays updated)
-ln -sf ~/content-gate/skills/summarize ~/clawd/skills/summarize
+ln -sf ~/cortexgate/skills/summarize ~/clawd/skills/summarize
 
 # Option 2: Copy
-cp -r ~/content-gate/skills/summarize ~/clawd/skills/
+cp -r ~/cortexgate/skills/summarize ~/clawd/skills/
 ```
 
 ### Install summarize CLI
@@ -195,7 +197,7 @@ EOF
 ## File Structure
 
 ```
-content-gate/
+cortexgate/
 ├── dashboard/
 │   ├── index.html      # Main HTML
 │   ├── style.css       # Styles (editorial design)
@@ -207,7 +209,7 @@ content-gate/
 │   └── summarize/
 │       └── SKILL.md    # AI agent skill definition
 ├── setup/
-│   └── content-gate.service  # systemd service
+│   └── cortexgate.service  # systemd service
 └── examples/
     └── *.json          # Sample items
 ```

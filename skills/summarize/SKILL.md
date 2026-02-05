@@ -1,13 +1,13 @@
 ---
 name: summarize
-description: Summarize URLs and save to Content-Gate dashboard for review before adding to Second Brain.
-homepage: https://github.com/Manantra/content-gate
+description: Summarize URLs and save to CortexGate dashboard for review before adding to Second Brain.
+homepage: https://github.com/Manantra/cortexgate
 metadata: {"clawdbot":{"emoji":"🧾","requires":{"bins":["summarize"]},"install":[{"id":"brew","kind":"brew","formula":"steipete/tap/summarize","bins":["summarize"],"label":"Install summarize CLI (brew)"}]}}
 ---
 
-# Summarize + Content-Gate
+# Summarize + CortexGate
 
-Summarize URLs/videos and save them to Content-Gate for review before adding to your Second Brain.
+Summarize URLs/videos and save them to CortexGate for review before adding to your Second Brain.
 
 ## When to use
 
@@ -20,7 +20,7 @@ Use this skill when the user asks:
 ## Prerequisites
 
 - `summarize` CLI: `brew install steipete/tap/summarize`
-- Content-Gate dashboard running on http://localhost:8080
+- CortexGate dashboard running on http://localhost:8080
 - `~/dashboard-inbox/` directory exists
 
 ## Quick Summarize (without saving)
@@ -32,7 +32,7 @@ summarize "https://youtu.be/VIDEO_ID" --youtube auto
 
 ---
 
-## Content-Gate Workflow
+## CortexGate Workflow
 
 When user wants to **save** the summary:
 
@@ -133,15 +133,15 @@ Output the summary + "Saved to dashboard. Open http://localhost:8080 to review."
 
 ## Installation
 
-This skill is included with Content-Gate. To use it with OpenClaw:
+This skill is included with CortexGate. To use it with OpenClaw:
 
 ```bash
 # Symlink to your skills directory
-ln -sf ~/content-gate/skills/summarize ~/clawd/skills/summarize
+ln -sf ~/cortexgate/skills/summarize ~/clawd/skills/summarize
 ```
 
 Or copy the skill:
 
 ```bash
-cp -r ~/content-gate/skills/summarize ~/clawd/skills/
+cp -r ~/cortexgate/skills/summarize ~/clawd/skills/
 ```
