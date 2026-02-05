@@ -366,6 +366,8 @@ function getTargetDirectory(source) {
             return '3-resources/videos';
         case 'website':
             return '3-resources/articles';
+        case 'research':
+            return '3-resources/research';
         default:
             return 'inbox';
     }

@@ -119,13 +119,15 @@ function createCard(item) {
     const sourceLabel = {
         'newsletter': 'Newsletter',
         'youtube': 'YouTube',
-        'website': 'Website'
+        'website': 'Website',
+        'research': 'Research'
     }[item.source] || item.source;
 
     const sourceIcon = {
         'newsletter': '📰',
         'youtube': '▶',
-        'website': '🌐'
+        'website': '🌐',
+        'research': '🔬'
     }[item.source] || '📄';
 
     const date = formatDate(item.created_at);
@@ -168,7 +170,8 @@ function openModal(id) {
     sourceEl.textContent = {
         'newsletter': '📰 Newsletter',
         'youtube': '▶ YouTube',
-        'website': '🌐 Website'
+        'website': '🌐 Website',
+        'research': '🔬 Research'
     }[item.source] || item.source;
 
     document.getElementById('modal-date').textContent = formatDate(item.created_at);

@@ -29,6 +29,7 @@
     --source-newsletter: #2D5A4A;
     --source-youtube: #C23B22;
     --source-website: #3D5A80;
+    --source-research: #6B4C9A;
 
     /* Typography */
     --font-display: 'Fraunces', Georgia, serif;
@@ -250,6 +251,7 @@ body {
 .card[data-source="newsletter"] { --card-accent: var(--source-newsletter); }
 .card[data-source="youtube"] { --card-accent: var(--source-youtube); }
 .card[data-source="website"] { --card-accent: var(--source-website); }
+.card[data-source="research"] { --card-accent: var(--source-research); }
 
 .card-header {
     display: flex;
@@ -285,6 +287,11 @@ body {
 .card-source[data-source="website"] {
     color: var(--source-website);
     background: rgba(61, 90, 128, 0.08);
+}
+
+.card-source[data-source="research"] {
+    color: var(--source-research);
+    background: rgba(107, 76, 154, 0.08);
 }
 
 .card-date {
@@ -498,6 +505,11 @@ body {
 .modal-source[data-source="website"] {
     color: var(--source-website);
     background: rgba(61, 90, 128, 0.08);
+}
+
+.modal-source[data-source="research"] {
+    color: var(--source-research);
+    background: rgba(107, 76, 154, 0.08);
 }
 
 .modal-date {
