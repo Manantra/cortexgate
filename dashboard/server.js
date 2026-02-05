@@ -99,8 +99,13 @@ function handleGetItems(req, res) {
             .filter(f => f.endsWith('.json'))
             .map(f => {
                 try {
-                    const content = fs.readFileSync(path.join(INBOX_DIR, f), 'utf8');
-                    return JSON.parse(content);
+                    const filePath = path.join(INBOX_DIR, f);
+                    const content = fs.readFileSync(filePath, 'utf8');
+                    const parsed = safeParseJson(content, filePath);
+                    if (!parsed) {
+                        console.error(`Error reading ${f}: Invalid JSON (even after sanitization)`);
+                    }
+                    return parsed;
                 } catch (e) {
                     console.error(`Error reading ${f}:`, e.message);
                     return null;
@@ -124,8 +129,9 @@ function handleSaveItem(req, res, id) {
         const files = fs.readdirSync(INBOX_DIR).filter(f => f.endsWith('.json'));
         const itemFile = files.find(f => {
             try {
-                const content = JSON.parse(fs.readFileSync(path.join(INBOX_DIR, f), 'utf8'));
-                return content.id === id;
+                const filePath = path.join(INBOX_DIR, f);
+                const content = safeParseJson(fs.readFileSync(filePath, 'utf8'), filePath);
+                return content && content.id === id;
             } catch {
                 return false;
             }
@@ -138,7 +144,7 @@ function handleSaveItem(req, res, id) {
         }
 
         const itemPath = path.join(INBOX_DIR, itemFile);
-        const item = JSON.parse(fs.readFileSync(itemPath, 'utf8'));
+        const item = safeParseJson(fs.readFileSync(itemPath, 'utf8'), itemPath);
 
         // Generate markdown for second-brain
         const markdown = generateMarkdown(item);
@@ -185,8 +191,9 @@ function handleDismissItem(req, res, id) {
         const files = fs.readdirSync(INBOX_DIR).filter(f => f.endsWith('.json'));
         const itemFile = files.find(f => {
             try {
-                const content = JSON.parse(fs.readFileSync(path.join(INBOX_DIR, f), 'utf8'));
-                return content.id === id;
+                const filePath = path.join(INBOX_DIR, f);
+                const content = safeParseJson(fs.readFileSync(filePath, 'utf8'), filePath);
+                return content && content.id === id;
             } catch {
                 return false;
             }
@@ -246,6 +253,50 @@ function handleStatic(req, res, pathname) {
 // ─────────────────────────────────────────────────────────────────
 // Utility Functions
 // ─────────────────────────────────────────────────────────────────
+
+/**
+ * Sanitize JSON content by replacing typographic quotes with ASCII quotes
+ * This fixes malformed JSON from AI-generated content
+ */
+function sanitizeJsonContent(content) {
+    return content
+        // Replace typographic double quotes with ASCII
+        .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g, '"')
+        // Replace typographic single quotes with ASCII apostrophe
+        .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'")
+        // Replace other unicode dashes with ASCII
+        .replace(/[\u2013\u2014]/g, '-');
+}
+
+/**
+ * Safely parse JSON with automatic sanitization
+ * If parsing fails after sanitization, returns null
+ */
+function safeParseJson(content, filePath = null) {
+    // First try parsing as-is
+    try {
+        return JSON.parse(content);
+    } catch (e) {
+        // Try with sanitization
+        const sanitized = sanitizeJsonContent(content);
+        try {
+            const parsed = JSON.parse(sanitized);
+            // If we have a file path and sanitization helped, save the fixed version
+            if (filePath && sanitized !== content) {
+                try {
+                    fs.writeFileSync(filePath, sanitized);
+                    console.log(`Auto-fixed JSON: ${path.basename(filePath)}`);
+                } catch (writeErr) {
+                    console.error(`Could not auto-fix ${filePath}:`, writeErr.message);
+                }
+            }
+            return parsed;
+        } catch (e2) {
+            // Still failed - return null
+            return null;
+        }
+    }
+}
 
 function generateMarkdown(item) {
     let dateStr;
