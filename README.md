@@ -124,19 +124,9 @@ Items in `~/dashboard-inbox/` follow this structure:
 - `newsletter` - Newsletter digests
 - `website` - Article summaries
 
-## AI Bot Integration (OpenClaw Skill)
+## AI Bot Integration (OpenClaw)
 
-CortexGate includes an OpenClaw skill for automatic URL summarization.
-
-### Install the Skill
-
-```bash
-# Option 1: Symlink (recommended - stays updated)
-ln -sf ~/cortexgate/skills/summarize ~/clawd/skills/summarize
-
-# Option 2: Copy
-cp -r ~/cortexgate/skills/summarize ~/clawd/skills/
-```
+CortexGate works with OpenClaw for automatic URL summarization. Create a skill in your workspace that outputs JSON to `~/dashboard-inbox/`.
 
 ### Install summarize CLI
 
@@ -205,9 +195,6 @@ cortexgate/
 │   ├── server.js       # Node.js API server
 │   ├── manifest.json   # PWA manifest
 │   └── icon.svg        # App icon
-├── skills/
-│   └── summarize/
-│       └── SKILL.md    # AI agent skill definition
 ├── setup/
 │   └── cortexgate.service  # systemd service
 └── examples/
