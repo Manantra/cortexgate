@@ -1,6 +1,6 @@
 {
-    "name": "Content Gate",
-    "short_name": "Content Gate",
+    "name": "CortexGate",
+    "short_name": "CortexGate",
     "description": "Review and curate content for Second Brain",
     "start_url": "/",
     "display": "standalone",

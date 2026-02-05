@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Content Gate — API Server
+ * CortexGate — API Server
  * Minimal Node.js server for dashboard backend
  *
  * Endpoints:
@@ -311,7 +311,7 @@ function generateMarkdown(item) {
         type: `${item.source}-summary`,
         date: dateStr,
         source: item.source,
-        tags: [item.source, 'summary', 'content-gate']
+        tags: [item.source, 'summary', 'cortexgate']
     };
 
     if (item.metadata) {
@@ -387,7 +387,7 @@ function slugify(text) {
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
-║                    Content Gate Server                        ║
+║                    CortexGate Server                          ║
 ╠═══════════════════════════════════════════════════════════════╣
 ║  Dashboard:    http://localhost:${PORT}                          ║
 ║  Inbox:        ${INBOX_DIR}

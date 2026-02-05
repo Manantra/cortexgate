@@ -1,4 +1,4 @@
-# Caddy reverse proxy configuration for Content Gate
+# Caddy reverse proxy configuration for CortexGate
 # Add this to your Caddyfile
 
 # Option 1: Local access only (recommended for Tailscale)

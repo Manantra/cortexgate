@@ -1,5 +1,5 @@
 /**
- * Content Gate — Dashboard Application
+ * CortexGate — Dashboard Application
  * Handles loading items, modal interactions, save/dismiss actions
  */
 
