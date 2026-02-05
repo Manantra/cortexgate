@@ -2,11 +2,11 @@
 ![Generated Image February 04, 2026 - 6_32PM](https://github.com/user-attachments/assets/81ac9ce4-7ce1-47f8-9d92-cb4cbc05237b)
 
 
-A lightweight dashboard to review and curate AI-generated content summaries before saving them to your Second Brain (Obsidian).
+<p align="center">
+  <img src="docs/flow-diagram.jpg" alt="Content Gate Flow: Telegram → AI Summary → Dashboard → Second Brain" width="100%">
+</p>
 
-```
-Newsletter/YouTube/Website → AI Summary → Dashboard Inbox → [Review] → Second Brain
-```
+A lightweight dashboard to review and curate AI-generated content summaries before saving them to your Second Brain (Obsidian).
 
 ## Features
 
