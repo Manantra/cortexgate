@@ -1,0 +1,18 @@
+{
+    "name": "Content Gate",
+    "short_name": "Content Gate",
+    "description": "Review and curate content for Second Brain",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#FAF8F5",
+    "theme_color": "#C45D3A",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}

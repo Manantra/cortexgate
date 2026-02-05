@@ -1,0 +1,19 @@
+# Caddy reverse proxy configuration for Content Gate
+# Add this to your Caddyfile
+
+# Option 1: Local access only (recommended for Tailscale)
+:8080 {
+    reverse_proxy localhost:3000
+}
+
+# Option 2: With domain (requires DNS setup)
+# content-gate.yourdomain.com {
+#     reverse_proxy localhost:3000
+# }
+
+# Option 3: Tailscale-only access
+# Ensure Caddy only listens on Tailscale interface:
+# :8080 {
+#     bind 100.x.x.x  # Your Tailscale IP
+#     reverse_proxy localhost:3000
+# }

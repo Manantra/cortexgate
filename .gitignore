@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Runtime data
+*.log
+*.pid
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Local config (user should create their own)
+.env

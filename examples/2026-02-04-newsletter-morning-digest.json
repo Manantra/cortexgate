@@ -1,0 +1,16 @@
+{
+    "id": "2026-02-04-newsletter-morning-digest",
+    "source": "newsletter",
+    "title": "Morning Digest: AI, Tech & Business",
+    "summary": "OpenAI kündigt GPT-5 für Q2 an mit Fokus auf Reasoning und Multimodalität. Apple arbeitet an einem faltbaren iPhone für 2027. EU-Regulierung für KI tritt im März in Kraft.",
+    "content": "## OpenAI GPT-5 Ankündigung\n\nSam Altman bestätigt GPT-5 Release für Q2 2026:\n- **Reasoning**: Deutlich verbesserte logische Schlussfolgerungen\n- **Multimodal**: Native Video-Verarbeitung\n- **Context**: 500k Token Kontext-Fenster\n- **Pricing**: Enterprise-Tier ab $200/Monat\n\n## Apple Foldable iPhone\n\nBerichte von Ming-Chi Kuo:\n- Release geplant für 2027\n- 8\" Display im aufgeklappten Zustand\n- Neue Hinge-Technologie ohne sichtbare Falte\n- Preis voraussichtlich ab $1,799\n\n## EU AI Act Update\n\n- **1. März 2026**: Verbot von Social Scoring\n- **1. Juni 2026**: Transparenzpflichten für generative KI\n- **1. September 2026**: Vollständige Compliance erforderlich\n\nUnternehmen sollten jetzt mit der Vorbereitung beginnen.",
+    "links": [
+        "https://openai.com/blog/gpt-5-announcement",
+        "https://www.apple.com",
+        "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"
+    ],
+    "created_at": "2026-02-04T07:00:00Z",
+    "metadata": {
+        "newsletters": ["Morning Brew", "TLDR", "The Hustle"]
+    }
+}

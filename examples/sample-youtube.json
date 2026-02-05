@@ -1,0 +1,51 @@
+{
+    "id": "2026-02-04-youtube-ai-productivity",
+    "source": "youtube",
+    "title": "10 AI Tools That Changed My Workflow",
+    "summary": "A comprehensive overview of AI tools for developers and creators. The video covers coding assistants, writing tools, and automation platforms that can significantly boost productivity.",
+    "sections": [
+        {
+            "heading": "Coding Assistants",
+            "items": [
+                "**GitHub Copilot:** Best for inline code completion",
+                "**Claude:** Excellent for complex refactoring tasks",
+                "**Cursor:** IDE with built-in AI capabilities"
+            ]
+        },
+        {
+            "heading": "Writing & Research",
+            "items": [
+                "**Perplexity:** AI-powered research with sources",
+                "**Notion AI:** Integrated writing assistant",
+                "**Obsidian + AI plugins:** Local-first knowledge management"
+            ]
+        },
+        {
+            "heading": "Automation",
+            "items": [
+                "**n8n:** Self-hosted workflow automation",
+                "**Zapier AI:** No-code AI integrations",
+                "**Make (Integromat):** Complex multi-step workflows"
+            ]
+        },
+        {
+            "heading": "Takeaways",
+            "items": [
+                "**For beginners:** Start with one tool, master it",
+                "**For teams:** Standardize on 2-3 tools max",
+                "**For solo devs:** Prioritize AI coding assistants"
+            ]
+        }
+    ],
+    "links": [
+        "https://youtube.com/watch?v=example123",
+        "https://github.com/features/copilot",
+        "https://cursor.sh"
+    ],
+    "created_at": "2026-02-04T14:30:00Z",
+    "metadata": {
+        "url": "https://youtube.com/watch?v=example123",
+        "duration": "18:42",
+        "channel": "Tech Reviews"
+    }
+}
