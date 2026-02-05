@@ -1,4 +1,5 @@
 # Content Gate
+<img width="942" height="2048" alt="grafik" src="https://github.com/user-attachments/assets/c33e9be0-c955-4968-a989-2fafa058f0e6" />
 
 A lightweight dashboard to review and curate AI-generated content summaries before saving them to your Second Brain (Obsidian).
 
