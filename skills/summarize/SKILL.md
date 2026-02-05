@@ -1,43 +1,71 @@
 ---
 name: summarize
-description: Summarize URLs and videos. Saves structured JSON to Dashboard.
-metadata: {"clawdbot":{"emoji":"🧾","requires":{"bins":["summarize"]}}}
+description: Summarize URLs and save to Content-Gate dashboard for review before adding to Second Brain.
+homepage: https://github.com/Manantra/content-gate
+metadata: {"clawdbot":{"emoji":"🧾","requires":{"bins":["summarize"]},"install":[{"id":"brew","kind":"brew","formula":"steipete/tap/summarize","bins":["summarize"],"label":"Install summarize CLI (brew)"}]}}
 ---
 
-# Summarize
+# Summarize + Content-Gate
 
-## WORKFLOW
+Summarize URLs/videos and save them to Content-Gate for review before adding to your Second Brain.
 
-### Schritt 1: Zusammenfassen
+## When to use
+
+Use this skill when the user asks:
+- "summarize this URL/article/video"
+- "save to second brain / save for later"
+- "add to dashboard"
+- "what's this link about?"
+
+## Prerequisites
+
+- `summarize` CLI: `brew install steipete/tap/summarize`
+- Content-Gate dashboard running on http://localhost:8080
+- `~/dashboard-inbox/` directory exists
+
+## Quick Summarize (without saving)
 
 ```bash
-~/.local/bin/summarize "USER_URL" --length medium
+summarize "https://example.com" --length medium
+summarize "https://youtu.be/VIDEO_ID" --youtube auto
 ```
 
-### Schritt 2: Strukturiertes JSON erstellen
+---
 
-**EXAKTES FORMAT - KEINE ABWEICHUNGEN:**
+## Content-Gate Workflow
+
+When user wants to **save** the summary:
+
+### Step 1: Summarize URL
+
+```bash
+summarize "USER_URL" --length medium --youtube auto
+```
+
+### Step 2: Create structured JSON
+
+**EXACT FORMAT - NO DEVIATIONS:**
 
 ```json
 {
     "id": "YYYY-MM-DD-SOURCE-SLUG",
-    "source": "youtube",
-    "title": "Exakter Titel",
-    "summary": "2-3 Sätze TL;DR. Keine Bulletpoints, nur Fließtext.",
+    "source": "youtube|newsletter|website",
+    "title": "Exact Title",
+    "summary": "2-3 sentences TL;DR. No bullet points, prose only.",
     "sections": [
         {
-            "heading": "Kernpunkte",
+            "heading": "Key Points",
             "items": [
-                "Erster Punkt ohne Bulletpoint-Prefix",
-                "Zweiter Punkt",
-                "Dritter Punkt"
+                "First point without bullet prefix",
+                "Second point",
+                "Third point"
             ]
         },
         {
             "heading": "Takeaways",
             "items": [
-                "**Für X:** Konkreter Tipp",
-                "**Für Y:** Konkreter Tipp"
+                "**For X:** Concrete tip",
+                "**For Y:** Concrete tip"
             ]
         }
     ],
@@ -47,40 +75,73 @@ metadata: {"clawdbot":{"emoji":"🧾","requires":{"bins":["summarize"]}}}
 }
 ```
 
-### REGELN FÜR SECTIONS:
+### Section Rules
 
-1. **heading**: Kurzer Titel (1-3 Wörter)
-2. **items**: Array von Strings, KEINE Verschachtelung
-3. **Bold-Text**: Mit `**text**` markieren
-4. **Keine Präfixe**: NICHT "- " oder "• " am Anfang
-5. **Max 5 Items** pro Section
-6. **2-4 Sections** pro Zusammenfassung
+1. **heading**: Short title (1-3 words)
+2. **items**: Array of strings, NO nesting
+3. **Bold text**: Use `**text**`
+4. **No prefixes**: NOT "- " or "• " at the start
+5. **Max 5 items** per section
+6. **2-4 sections** per summary
 
-### Schritt 3: Speichern
+### JSON Safety (CRITICAL)
 
-**Datum VORHER generieren:**
-```bash
-CREATED_AT=$(date -Iseconds)
+**FORBIDDEN in JSON strings:**
+- Typographic quotes: `"` `"` `'` `'` → Replace with apostrophe `'`
+- Unescaped backslashes: `\` → Use `\\`
+- Line breaks in strings: Replace with spaces
+
+**Example - WRONG:**
+```json
+"items": ["He said "Hello" to me"]
 ```
 
-**Dann JSON erstellen:**
+**Example - CORRECT:**
+```json
+"items": ["He said 'Hello' to me"]
+```
+
+### Step 3: Save to inbox
+
 ```bash
-cat > ~/dashboard-inbox/YYYY-MM-DD-SOURCE-SLUG.json << JSONEOF
+CREATED_AT=$(date -Iseconds)
+cat > ~/dashboard-inbox/YYYY-MM-DD-SOURCE-SLUG.json << 'JSONEOF'
 {
-    "id": "...",
-    "source": "...",
-    "title": "...",
-    "summary": "...",
+    "id": "2026-02-05-youtube-example-video",
+    "source": "youtube",
+    "title": "Example Video Title",
+    "summary": "Brief summary here.",
     "sections": [...],
-    "links": ["..."],
+    "links": ["https://youtu.be/..."],
     "created_at": "${CREATED_AT}",
-    "metadata": {"url": "..."}
+    "metadata": {"url": "https://youtu.be/..."}
 }
 JSONEOF
 ```
 
-**WICHTIG:** `${CREATED_AT}` mit Double-Quotes und geschweiften Klammern!
+### Step 4: Confirmation
 
-### Schritt 4: Antworten
+Output the summary + "Saved to dashboard. Open http://localhost:8080 to review."
 
-Gib Zusammenfassung aus + "Im Dashboard gespeichert"
+### Source Types
+
+- `youtube` → youtu.be, youtube.com
+- `newsletter` → Newsletter links
+- `website` → All other URLs
+
+---
+
+## Installation
+
+This skill is included with Content-Gate. To use it with OpenClaw:
+
+```bash
+# Symlink to your skills directory
+ln -sf ~/content-gate/skills/summarize ~/clawd/skills/summarize
+```
+
+Or copy the skill:
+
+```bash
+cp -r ~/content-gate/skills/summarize ~/clawd/skills/
+```

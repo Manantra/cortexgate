@@ -122,9 +122,33 @@ Items in `~/dashboard-inbox/` follow this structure:
 - `newsletter` - Newsletter digests
 - `website` - Article summaries
 
-## AI Bot Integration
+## AI Bot Integration (OpenClaw Skill)
 
-The `skills/summarize/SKILL.md` file can be used with AI agents (like OpenClaw/Claude) to automatically generate summaries in the correct format.
+Content-Gate includes an OpenClaw skill for automatic URL summarization.
+
+### Install the Skill
+
+```bash
+# Option 1: Symlink (recommended - stays updated)
+ln -sf ~/content-gate/skills/summarize ~/clawd/skills/summarize
+
+# Option 2: Copy
+cp -r ~/content-gate/skills/summarize ~/clawd/skills/
+```
+
+### Install summarize CLI
+
+```bash
+brew install steipete/tap/summarize
+```
+
+### Usage
+
+Tell your AI agent:
+- "Summarize this URL and save to dashboard"
+- "Save this video to my second brain"
+
+The skill will create properly formatted JSON in `~/dashboard-inbox/`.
 
 ### Manual Testing
 
