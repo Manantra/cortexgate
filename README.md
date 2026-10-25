@@ -4,7 +4,7 @@
   <img src="docs/flow-diagram.jpg" alt="Content Gate Flow: Telegram → AI Summary → Dashboard → Second Brain" width="100%">
 </p>
 
-A lightweight dashboard to review and curate AI-generated content summaries before saving them to your Second Brain (Obsidian).
+A lightweight, mobile-friendly **review queue for AI-generated summaries**. Read a summary, save selected items as Markdown into an Obsidian-compatible knowledge base, or dismiss what you don't need. Humans stay in charge of what gets stored.
 
 > **Note:** This project was formerly known as "Content Gate".
 
@@ -22,7 +22,7 @@ A lightweight dashboard to review and curate AI-generated content summaries befo
 ```
 ┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
 │ AI Bot          │────▶│ ~/dashboard-inbox│────▶│ Dashboard       │
-│ (summarize URLs)│     │    /*.json       │     │ localhost:3000  │
+│ (summarize URLs)│     │    /*.json       │     │ localhost:8080  │
 └─────────────────┘     └──────────────────┘     └────────┬────────┘
                                                           │
                                                           │ "Save" Button
@@ -33,54 +33,55 @@ A lightweight dashboard to review and curate AI-generated content summaries befo
                                               └─────────────────────┘
 ```
 
-## Quick Start
+## Quick start
 
-### 1. Install Dependencies
+CortexGate is a small **Node.js server with a browser dashboard**. It reads pending JSON summaries from an inbox, then either exports a selected item as Markdown into your Second Brain folder or dismisses it.
 
-```bash
-# Node.js required
-node --version  # v18+ recommended
-```
+### 1. Clone and prepare folders
 
-### 2. Create Directories
+Use Node.js (v18+ recommended). There is no npm install step for the included server.
 
 ```bash
-mkdir -p ~/dashboard-inbox
-mkdir -p ~/second-brain/inbox  # or your Obsidian vault path
+git clone https://github.com/Manantra/cortexgate.git
+cd cortexgate
+node --version
+mkdir -p "$HOME/dashboard-inbox" "$HOME/second-brain"
 ```
 
-### 3. Configure Paths
+### 2. Start the dashboard
 
-Edit `dashboard/server.js`:
-
-```javascript
-const INBOX_DIR = '/home/YOUR_USER/dashboard-inbox';
-const SECOND_BRAIN_DIR = '/home/YOUR_USER/second-brain/inbox';
-```
-
-### 4. Start the Server
+The server uses environment variables; **you do not need to edit `dashboard/server.js`** to configure your folders.
 
 ```bash
-cd dashboard
-node server.js
+PORT=8080 \
+INBOX_DIR="$HOME/dashboard-inbox" \
+SECOND_BRAIN_DIR="$HOME/second-brain" \
+node dashboard/server.js
 ```
 
-Dashboard available at: http://localhost:3000
+Open **http://localhost:8080** in your browser. The defaults are also port `8080`, `~/dashboard-inbox`, and `~/second-brain` if no environment variables are provided.
 
-### 5. (Optional) Run as Service
+To see an item in the dashboard, put a valid JSON summary into the inbox; see [manual test](#manual-testing) or [sample items](examples/). Saving places Markdown under the configured Second Brain directory, grouped by source type; dismissing removes the pending inbox item.
+
+> [!WARNING]
+> **Keep CortexGate private.** The current server listens on `0.0.0.0` and exposes save/dismiss actions **without authentication**, with permissive CORS. Do not publish port 8080 or put this dashboard directly on the public internet. Use only on a trusted machine/network with appropriate firewall restrictions; add real authentication and access controls before any remote deployment. Summaries may include private information.
+
+### 3. Optional: run as a user-level systemd service (Linux)
+
+The included [service unit](setup/cortexgate.service) expects the checkout at `~/cortexgate`, Node.js at `/usr/bin/node`, and listens on `8080`. Check these paths and edit the copied unit if your setup differs.
 
 ```bash
-# Copy service file
-cp setup/cortexgate.service ~/.config/systemd/user/
-
-# Edit paths in the service file
-nano ~/.config/systemd/user/cortexgate.service
-
-# Enable and start
+mkdir -p ~/.config/systemd/user
+cp setup/cortexgate.service ~/.config/systemd/user/cortexgate.service
+command -v node
+# If required, edit WorkingDirectory / ExecStart / Environment paths in:
+# ~/.config/systemd/user/cortexgate.service
 systemctl --user daemon-reload
-systemctl --user enable content-gate
-systemctl --user start content-gate
+systemctl --user enable --now cortexgate.service
+systemctl --user status cortexgate.service
 ```
+
+Service name: `cortexgate.service` (not the former `content-gate` name). Keep the same network-access warning in mind for a service install.
 
 ## JSON Schema
 
@@ -123,6 +124,7 @@ Items in `~/dashboard-inbox/` follow this structure:
 - `youtube` - Video summaries
 - `newsletter` - Newsletter digests
 - `website` - Article summaries
+- `research` - Research summaries
 
 ## AI Bot Integration (OpenClaw)
 
